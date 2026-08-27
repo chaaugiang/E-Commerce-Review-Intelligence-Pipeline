@@ -229,9 +229,9 @@ The December peak is consistent with holiday-period purchasing behavior, althoug
 
 ---
 
-# Technical Implementation
+## Technical Implementation
 
-## SQL — Prepare Analysis-Ready Data
+### SQL - Prepare Analysis-Ready Data
 
 Rather than moving millions of records into R, SQL was used to perform the heavier aggregation work within MySQL.
 
@@ -296,7 +296,7 @@ R and ggplot2 were used to visualize the prepared datasets and communicate the r
 # Repository Structure
 
 ```text
-marketplace-review-intelligence/
+e-commerce-review-intelligence-analytics/
 │
 ├── README.md
 ├── .gitignore
@@ -310,16 +310,16 @@ marketplace-review-intelligence/
 │   │   └── download.py
 │   │
 │   ├── sql/
-│   │   └── review_analysis.sql
+│   │   └── analysis_review.sql
 │   │
 │   └── r/
 │       └── analysis_visualizations.R
 │
 └── images/
     ├── verified_purchase.png
-    ├── rating_distribution.png
+    ├── distribution.png
     ├── reviewer_bias.png
-    └── review_seasonality.png
+    └── ...
 ```
 
 ---
