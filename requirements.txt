@@ -1,1 +1,4 @@
-
+pandas
+PyYAML
+SQLAlchemy
+PyMySQL
