@@ -1,5 +1,6 @@
 # E-Commerce-Review-Intelligence-Pipeline
 An end-to-end analytics project examining customer behavior, review quality, seasonality, and incentive-program effectiveness, across 2.6M+ e-commerce product reviews.
+
 Python | MySQL| SQL | R | pandas
 
 ## Project Overview
@@ -18,12 +19,8 @@ Rather than processing the full dataset locally, the workflow used a remote MySQ
 
 
 ## My Contribution
-This was a collaborative analytics project. My primary contribution focused on the **SQL-to-analysis portion of the workflow**, including the database extraction process and several downstream analyses.
-
-I contributed to:
-
+This was a collaborative analytics project. My primary contribution includes:
 - **Building a reusable Python extraction utility** that connects to a remote MySQL database and exports selected analytical tables to local CSV files.
-- Implementing command-line parameters, YAML-based database configuration, logging, exception handling, and file-overwrite protection to make the extraction process reusable across multiple analytical outputs.
 - Preparing and working with SQL outputs for analyses covering **verified purchase behavior, rating distribution, reviewer rating bias, and review seasonality**.
 - Developing R visualizations to communicate these patterns and translate analytical results into understandable business insights.
 - Contributing to the interpretation and communication of findings within the final analysis.
@@ -31,13 +28,11 @@ I contributed to:
 ## Key Findings
 ## 1. Verified Purchasers Rated Products More Positively
 
-I first compared average ratings across verified and non-verified purchases to determine whether purchasing context was associated with rating behavior.
+First, compared average ratings across verified and non-verified purchases to determine whether purchasing context was associated with rating behavior.
 
-![Average Rating by Purchase Verification Status](verified_purchase.png)
+![Average Rating by Purchase Verification Status](images/verified_purchase.png)
 
-The overall average product rating was **4.14 stars**.
-
-Breaking the reviews apart revealed a noticeable difference:
+The overall average product rating was **4.14 stars**. Breaking the reviews apart revealed a noticeable difference:
 
 | Purchase Status | Average Rating |
 |---|---:|
@@ -49,19 +44,15 @@ A 0.32-star difference may appear modest on a five-point scale, but marketplace 
 
 ### Takeaway
 
-Verified purchasers were associated with **more positive rating behavior**, but this should not be interpreted as evidence that verification itself causes higher ratings.
-
-Verification status is observational rather than randomly assigned. Differences could also reflect product selection, reviewer characteristics, or other behavioral differences between the two groups.
-
-**The useful insight:** purchase verification provides important context when interpreting marketplace ratings, but the relationship is associative rather than causal.
+Verified purchasers were associated with **more positive rating behavior**, but this should not be interpreted as evidence that verification itself causes higher ratings. Purchase verification provides important context when interpreting marketplace ratings, but the relationship is associative rather than causal.
 
 ---
 
 ## 2. The Average Rating Hides a Highly Polarized Distribution
 
-An overall average of 4.14 stars suggests broadly positive sentiment — but the full distribution tells a more interesting story.
+An overall average of 4.14 stars suggests broadly positive sentiment - but the full distribution tells a more interesting story.
 
-![Distribution of Star Ratings](rating_distribution.png)
+![Distribution of Star Ratings](images/rating_distribution.png)
 
 The distribution is heavily concentrated at the top of the rating scale:
 
@@ -83,7 +74,7 @@ The middle of the scale is relatively thin, with 2- and 3-star reviews together 
 
 The distribution behaves less like a smooth measure of satisfaction and more like a **polarized customer-response signal**.
 
-Customers appear especially likely to leave reviews when they are very satisfied — and, to a lesser extent, when they are very dissatisfied.
+Customers appear especially likely to leave reviews when they are very satisfied - and, to a lesser extent, when they are very dissatisfied.
 
 This also means the average rating should be interpreted carefully. A relatively small change in the mean could reflect a shift in the proportion of extreme ratings rather than a broad change in customer sentiment.
 
@@ -104,11 +95,11 @@ A reviewer was flagged when they:
 
 The five-review requirement provides enough observations to identify a repeated pattern, while the 80% threshold captures consistently extreme behavior without requiring every review to be extreme.
 
-Importantly, this is a **behavioral flag — not proof that an individual reviewer is objectively biased**.
+Importantly, this is a **behavioral flag - not proof that an individual reviewer is objectively biased**.
 
 ### Comparing the Rating Distributions
 
-![Rating Distribution With and Without Potentially Biased Reviewers](images/03_reviewer_bias_comparison.png)
+![Rating Distribution With and Without Potentially Biased Reviewers](images/reviewer_bias.png)
 
 After excluding the flagged reviewers:
 
@@ -124,7 +115,7 @@ The implied average rating declined from approximately **4.14 to 4.08 stars**.
 
 ### Where Did the Distribution Move?
 
-![Change in Rating Share After Excluding Potentially Biased Reviewers](images/04_reviewer_bias_shift.png)
+![Change in Rating Share After Excluding Potentially Biased Reviewers](images/reviewer_shift.png)
 
 The second view makes the direction of the change clearer.
 
@@ -158,13 +149,13 @@ The result should therefore be interpreted as a **sensitivity analysis of review
 
 ---
 
-## 4. Review Activity Grew Dramatically — But Growth and Seasonality Are Different Stories
+## 4. Review Activity Grew Dramatically - But Growth and Seasonality Are Different Stories
 
 The final analysis examined how marketplace review activity changed over time.
 
 ### Long-Term Growth
 
-![Monthly Review Volume Over Time](images/05_monthly_review_growth.png)
+![Monthly Review Volume Over Time](images/monthly_review.png)
 
 Monthly review volume grew by roughly **five orders of magnitude**, from only a handful of reviews per month in the earliest years to more than **100,000 reviews per month by mid-2015**.
 
@@ -186,7 +177,7 @@ To isolate recurring within-year behavior, I focused on **2010–2014**.
 
 Earlier years contained too few observations for stable monthly comparisons, while 2015 was excluded because the dataset ends partway through the year.
 
-![Review Volume by Month and Year](images/06_review_volume_by_month.png)
+![Review Volume by Month and Year](images/review_volume_by_month.png)
 
 Plotting each year separately reveals a recurring shape:
 
@@ -217,7 +208,7 @@ An index of:
 - **> 1.0** = above-average month
 - **< 1.0** = below-average month
 
-![Seasonal Index by Month](images/07_seasonal_index.png)
+![Seasonal Index by Month](images/seasonal_index.png)
 
 After controlling for the enormous differences in annual scale, the recurring seasonal pattern becomes much clearer.
 
@@ -250,13 +241,7 @@ The December peak is consistent with holiday-period purchasing behavior, althoug
 
 Rather than moving millions of records into R, SQL was used to perform the heavier aggregation work within MySQL.
 
-For the analyses presented here, SQL was used to:
-
-- calculate average ratings by verification status;
-- aggregate review counts by star rating;
-- identify reviewers meeting the extreme-rating behavioral criteria;
-- recalculate rating distributions after excluding those reviewers; and
-- aggregate review volume by month and year.
+For the analyses presented here, SQL was used to: calculate average ratings by verification status; aggregate review counts by star rating; identify reviewers meeting the extreme-rating behavioral criteria; recalculate rating distributions after excluding those reviewers; and aggregate review volume by month and year.
 
 This produced smaller analytical tables designed specifically for downstream visualization.
 
@@ -402,34 +387,13 @@ Use `--force` if an existing output file should be replaced.
 
 ---
 
-# Tools & Skills
-
-**Languages & Analytics**
-
-`Python` · `SQL` · `R`
-
-**Data & Database**
-
-`MySQL` · `pandas` · `SQLAlchemy` · `PyMySQL`
-
-**Visualization**
-
-`ggplot2` · `tidyverse`
-
-**Workflow**
-
-Command-line tools · YAML configuration · Database extraction · Data aggregation · Exploratory analysis · Data visualization · Business interpretation
-
----
-
-# Project Takeaway
+# Takeaway
 
 The project reinforced that working with large datasets is not only about producing calculations or visualizations. The structure of the analytical workflow matters just as much.
 
 Keeping large-scale preparation in SQL, creating reusable mechanisms for transferring analytical outputs, and then using R primarily for visualization created a cleaner separation between **data processing, analysis, and communication**.
 
 The analysis also demonstrated the importance of looking beyond headline metrics. Average ratings, raw review counts, and total activity can tell very different stories once reviewer behavior, distribution shape, and seasonality are considered.
-
 ---
 
 ## Collaboration
