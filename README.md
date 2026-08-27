@@ -1,7 +1,7 @@
 # E-Commerce-Review-Intelligence-Pipeline
 An end-to-end analytics project examining customer behavior, review quality, seasonality, and incentive-program effectiveness, across 2.6M+ e-commerce product reviews.
 
-Python | MySQL| SQL | R | pandas
+Python | MySQL | SQL | R | pandas
 
 ## Project Overview
 Online marketplaces collect enormous amounts of customer feedback, but review volume alone does not necessarily translate into useful insight. Understanding how customers rate products, whether different types of reviewers behave differently, and when review activity changes can help businesses interpret marketplace feedback more effectively.
