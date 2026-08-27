@@ -46,7 +46,7 @@ Verified purchasers were associated with **more positive rating behavior**, but 
 
 An overall average of 4.14 stars suggests broadly positive sentiment - but the full distribution tells a more interesting story.
 
-![Distribution of Star Ratings](images/rating_distribution.png)
+![Distribution of Star Ratings](images/distribution.png)
 
 The distribution is heavily concentrated at the top of the rating scale:
 
@@ -279,33 +279,17 @@ This created a reusable bridge between the project's **database processing layer
 
 # Analytical Approach
 
-### SQL — Prepare
+### SQL - Prepare
 
-SQL was used to perform data-intensive operations within the database and create smaller analysis-ready result tables.
+SQL handled the heavy processing and created analysis-ready tables for verified-purchase ratings, rating distributions, reviewer bias, and monthly review activity.
 
-For my analysis areas, this included:
+### Python - Extract
 
-- calculating average ratings by purchase-verification status;
-- aggregating review counts by star rating;
-- identifying reviewers exhibiting extreme rating behavior;
-- comparing rating distributions with and without those reviewers; and
-- aggregating review activity by month and year.
+Python connected the remote MySQL database to the local analysis workflow. pandas, SQLAlchemy, PyMySQL, PyYAML, argparse, and logging supported database access, configurable extraction, CSV output, and execution tracking. 
 
-### Python — Extract
+### R - Visualize & Interpret
 
-Python provided the reusable interface between the remote database and local analytical environment.
-
-Key tools included:
-
-- **pandas** for database results and CSV output;
-- **SQLAlchemy + PyMySQL** for MySQL connectivity;
-- **PyYAML** for external database configuration;
-- **argparse** for command-line parameters; and
-- **logging** for execution and error reporting.
-
-### R — Visualize & Interpret
-
-R and `ggplot2` were used to transform the analysis-ready outputs into visualizations that made behavioral patterns easier to interpret and communicate.
+R and ggplot2 were used to visualize the prepared datasets and communicate the resulting customer and marketplace patterns.
 
 ---
 
@@ -387,9 +371,7 @@ The project reinforced that working with large datasets is not only about produc
 
 Keeping large-scale preparation in SQL, creating reusable mechanisms for transferring analytical outputs, and then using R primarily for visualization created a cleaner separation between **data processing, analysis, and communication**.
 
-The analysis also demonstrated the importance of looking beyond headline metrics. Average ratings, raw review counts, and total activity can tell very different stories once reviewer behavior, distribution shape, and seasonality are considered.
+## The analysis also demonstrated the importance of looking beyond headline metrics. Average ratings, raw review counts, and total activity can tell very different stories once reviewer behavior, distribution shape, and seasonality are considered.
 ---
 
-## Collaboration
 
-This project was completed collaboratively. The repository focuses on the components and analyses I personally contributed to, while the broader project involved shared work across data ingestion, database cleaning, SQL analysis, visualization, and interpretation.
