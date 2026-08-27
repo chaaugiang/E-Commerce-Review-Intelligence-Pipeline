@@ -307,14 +307,3 @@ The analysis also demonstrated the importance of looking beyond headline metrics
 ## Collaboration
 
 This project was completed collaboratively. The repository focuses on the components and analyses I personally contributed to, while the broader project involved shared work across data ingestion, database cleaning, SQL analysis, visualization, and interpretation.
-
-The underlying review dataset and database credentials are not included in this repository.
-A few choices I made intentionally
-
-I would keep “My Contribution” near the top. Don't bury it at the bottom. A recruiter should be able to understand within 30 seconds that this was collaborative and exactly what you owned.
-
-I also like the Prepare → Extract → Visualize & Interpret framing. It's much easier to understand than “Part 2 → Part 3 → Part 4,” while accurately describing what you did.
-
-And I would definitely keep the Q8 methodology in there. Creating a rule for “potentially biased” reviewers and then testing how removing them changes the distribution shows more analytical thinking than simply making a bar chart. Your report's results support the 62.2% → 59.0% change.
-
-One thing I would not do is make the README much longer than this. Once you add four images, this will already feel like a substantial case study. Your code is there for someone who wants to go deeper; the README's job is to make them want to.
