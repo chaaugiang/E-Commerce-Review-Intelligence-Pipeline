@@ -371,7 +371,7 @@ The project reinforced that working with large datasets is not only about produc
 
 Keeping large-scale preparation in SQL, creating reusable mechanisms for transferring analytical outputs, and then using R primarily for visualization created a cleaner separation between **data processing, analysis, and communication**.
 
-## The analysis also demonstrated the importance of looking beyond headline metrics. Average ratings, raw review counts, and total activity can tell very different stories once reviewer behavior, distribution shape, and seasonality are considered.
+The analysis also demonstrated the importance of looking beyond headline metrics. Average ratings, raw review counts, and total activity **can tell very different stories once reviewer behavior, distribution shape, and seasonality are considered**.
 ---
 
 
