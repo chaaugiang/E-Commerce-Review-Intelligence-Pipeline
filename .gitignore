@@ -1,1 +1,24 @@
+# Database credentials
+connection.yaml
+.env
 
+# Python virtual environments
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# IDE files
+.idea/
+.vscode/
+
+# Raw/local data
+data/
+*.csv
+*.txt
+
+# OS files
+.DS_Store
+Thumbs.db
