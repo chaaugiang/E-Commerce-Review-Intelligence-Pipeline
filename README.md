@@ -16,29 +16,6 @@ The analysis explored several dimensions of marketplace review behavior, includi
 
 Rather than processing the full dataset locally, the workflow used a remote MySQL database for data preparation and aggregation. Python was then used to extract analysis-ready results from the database, while R was used to visualize and interpret the resulting patterns.
 
-## Analytics Workflow
-2.6M+ Marketplace Reviews
-          │
-          ▼
-   Remote MySQL Database
-          │
-          ▼
- SQL Cleaning & Aggregation
-          │
-          ▼
- Analysis-Ready Tables
-          │
-          ▼
- Python Extraction Utility
-          │
-          ▼
-      Local CSVs
-          │
-          ▼
- R Analysis & Visualization
-          │
-          ▼
-    Business Insights
 
 ## My Contribution
 This was a collaborative analytics project. My primary contribution focused on the **SQL-to-analysis portion of the workflow**, including the database extraction process and several downstream analyses.
@@ -53,86 +30,237 @@ I contributed to:
 
 ## Key Findings
 ## 1. Verified Purchasers Rated Products More Positively
-To understand whether purchasing context was associated with rating behavior, average ratings were compared across all reviewers, verified purchasers, and non-verified reviewers.
 
-| Reviewer Group | Average Rating |
+I first compared average ratings across verified and non-verified purchases to determine whether purchasing context was associated with rating behavior.
+
+![Average Rating by Purchase Verification Status](verified_purchase.png)
+
+The overall average product rating was **4.14 stars**.
+
+Breaking the reviews apart revealed a noticeable difference:
+
+| Purchase Status | Average Rating |
 |---|---:|
-| Overall | **4.16** |
-| Verified Purchase | **4.18** |
-| Non-Verified Purchase | **3.86** |
+| Verified | **4.18** |
+| Non-Verified | **3.86** |
+| Difference | **+0.32** |
 
-Verified purchasers rated products approximately **0.32 stars higher** than non-verified reviewers on average.
-
-### Takeaway
-
-Purchase verification appears to be associated with somewhat more positive ratings. This suggests that verified-purchase status can provide useful context when businesses interpret marketplace review scores rather than treating all ratings as behaviorally identical.
-
----
-
-## 2. Customer Ratings Were Strongly Concentrated at the Top
-
-Average ratings alone can hide the underlying shape of customer sentiment, so the full distribution of ratings was examined.
-
-![Rating Distribution](images/rating_distribution.png)
-
-The distribution was heavily concentrated toward positive ratings:
-
-- **62.2%** of reviews received 5 stars.
-- **14.4%** received 4 stars.
-- Together, 4- and 5-star reviews represented approximately **76.6%** of the dataset.
-- 1-star reviews represented approximately **9.4%** of reviews.
+A 0.32-star difference may appear modest on a five-point scale, but marketplace ratings are already concentrated toward the upper end of the scale. The overall mean also sits much closer to the verified-purchase average, indicating that verified reviews make up much of the dataset and strongly influence the headline rating.
 
 ### Takeaway
 
-Customer sentiment in the dataset was overwhelmingly positive, but the strong concentration of 5-star reviews also means that a single average rating does not fully describe reviewer behavior. Looking at the complete distribution provides a more informative picture of marketplace sentiment.
+Verified purchasers were associated with **more positive rating behavior**, but this should not be interpreted as evidence that verification itself causes higher ratings.
+
+Verification status is observational rather than randomly assigned. Differences could also reflect product selection, reviewer characteristics, or other behavioral differences between the two groups.
+
+**The useful insight:** purchase verification provides important context when interpreting marketplace ratings, but the relationship is associative rather than causal.
 
 ---
 
-## 3. Extreme Reviewer Behavior Had a Measurable — but Limited — Effect
+## 2. The Average Rating Hides a Highly Polarized Distribution
 
-Some reviewers may consistently use only the extremes of the rating scale. To explore whether this behavior was influencing the overall distribution, a behavioral rule was created to identify potentially biased reviewers.
+An overall average of 4.14 stars suggests broadly positive sentiment — but the full distribution tells a more interesting story.
+
+![Distribution of Star Ratings](rating_distribution.png)
+
+The distribution is heavily concentrated at the top of the rating scale:
+
+| Rating | Reviews | Share |
+|---:|---:|---:|
+| 1 ★ | 248,518 | **9.4%** |
+| 2 ★ | 151,067 | **5.7%** |
+| 3 ★ | 216,334 | **8.2%** |
+| 4 ★ | 380,780 | **14.4%** |
+| 5 ★ | 1,643,144 | **62.2%** |
+
+**4- and 5-star ratings account for 76.6% of all reviews**, while 5-star reviews alone represent nearly two-thirds of the dataset.
+
+But there is another interesting feature: **1-star reviews are more common than either 2- or 3-star reviews.**
+
+The middle of the scale is relatively thin, with 2- and 3-star reviews together representing only **13.9%** of reviews.
+
+### Takeaway
+
+The distribution behaves less like a smooth measure of satisfaction and more like a **polarized customer-response signal**.
+
+Customers appear especially likely to leave reviews when they are very satisfied — and, to a lesser extent, when they are very dissatisfied.
+
+This also means the average rating should be interpreted carefully. A relatively small change in the mean could reflect a shift in the proportion of extreme ratings rather than a broad change in customer sentiment.
+
+---
+
+## 3. Are Extreme Reviewers Driving the Positive Ratings?
+
+The strongly top-heavy rating distribution raised another question:
+
+> Could a relatively small group of reviewers who repeatedly give extreme ratings be distorting the marketplace's overall rating profile?
+
+Because reviewer bias cannot be directly observed, I used a behavioral definition to identify **potentially biased reviewers**.
 
 A reviewer was flagged when they:
 
-- had submitted at least **five reviews**, and
+- submitted at least **5 reviews**, and
 - gave either a **1-star or 5-star rating in at least 80%** of those reviews.
 
-The rating distribution was then recalculated after excluding those reviewers.
+The five-review requirement provides enough observations to identify a repeated pattern, while the 80% threshold captures consistently extreme behavior without requiring every review to be extreme.
 
-![Reviewer Bias Analysis](images/reviewer_bias.png)
+Importantly, this is a **behavioral flag — not proof that an individual reviewer is objectively biased**.
 
-The largest change occurred among 5-star reviews, whose share declined from approximately **62.2% to 59.0%** after potentially biased reviewers were removed.
+### Comparing the Rating Distributions
 
-However, the overall shape of the distribution remained similar.
+![Rating Distribution With and Without Potentially Biased Reviewers](images/03_reviewer_bias_comparison.png)
+
+After excluding the flagged reviewers:
+
+| Rating | All Reviewers | Without Flagged Reviewers | Change |
+|---:|---:|---:|---:|
+| 1 ★ | 9.4% | 9.8% | **+0.4 pp** |
+| 2 ★ | 5.7% | 6.3% | **+0.6 pp** |
+| 3 ★ | 8.2% | 9.0% | **+0.8 pp** |
+| 4 ★ | 14.4% | 15.9% | **+1.5 pp** |
+| 5 ★ | 62.2% | 59.0% | **−3.3 pp** |
+
+The implied average rating declined from approximately **4.14 to 4.08 stars**.
+
+### Where Did the Distribution Move?
+
+![Change in Rating Share After Excluding Potentially Biased Reviewers](images/04_reviewer_bias_shift.png)
+
+The second view makes the direction of the change clearer.
+
+**Five stars was the only rating category that lost share.**
+
+Every other rating gained share after the flagged reviewers were removed.
+
+That asymmetry is important. The behavioral rule captures extreme reviewers at **both ends** of the scale, yet removing them primarily reduces 5-star ratings.
 
 ### Takeaway
 
-Extreme-rating reviewers contributed to the dataset's concentration of 5-star reviews, but they did **not fully explain the broader positive rating pattern**. This suggests that the strong positive skew was a characteristic of the overall review population rather than being driven solely by a relatively small group of highly polarized reviewers.
+Potentially biased reviewers appear to contribute some **upward pressure** to marketplace ratings, but the effect is relatively small.
+
+Even after removing them:
+
+- 5 stars remains by far the most common rating;
+- 4- and 5-star ratings still represent approximately **74.9%** of reviews; and
+- the overall shape of the distribution remains strongly positive.
+
+Therefore, the marketplace's positive rating pattern is **not simply an artifact of a small group of extreme reviewers**.
+
+A more interesting finding is the direction of the effect: among frequent reviewers who repeatedly use the extremes of the rating scale, extreme positivity appears more prevalent than extreme negativity.
+
+### Limitation
+
+This metric identifies unusual rating behavior, not intent.
+
+A customer who genuinely loved five consecutive products could be flagged in exactly the same way as someone exhibiting systematic rating bias. Different minimum-review or extreme-rating thresholds could also identify different populations.
+
+The result should therefore be interpreted as a **sensitivity analysis of reviewer behavior**, not a definitive classification of individual reviewers.
 
 ---
 
-## 4. Review Activity Showed Clear Seasonal Patterns
+## 4. Review Activity Grew Dramatically — But Growth and Seasonality Are Different Stories
 
-Review volume increased substantially over time, making raw monthly counts difficult to compare directly across years.
+The final analysis examined how marketplace review activity changed over time.
 
-To separate **seasonality from overall platform growth**, monthly review activity was normalized relative to the average month within each year.
+### Long-Term Growth
 
-![Review Seasonality](images/review_seasonality.png)
+![Monthly Review Volume Over Time](images/05_monthly_review_growth.png)
 
-The resulting seasonal pattern showed that:
+Monthly review volume grew by roughly **five orders of magnitude**, from only a handful of reviews per month in the earliest years to more than **100,000 reviews per month by mid-2015**.
 
-- review activity generally weakened during the spring and early summer;
-- activity began increasing during the second half of the year; and
-- **December consistently represented the strongest review month**, reaching roughly 65% above an average month in the seasonal analysis.
+Because that growth is so large, the visualization uses a logarithmic scale. On a standard linear scale, the early years would be compressed near zero and the underlying pattern would be difficult to see.
+
+The approximately linear pattern on the log scale indicates growth closer to **exponential than linear** over much of the period.
+
+Visible level changes also appear around 2013 and 2014, suggesting that marketplace growth was not perfectly smooth.
+
+But this creates a problem for seasonality analysis:
+
+> If every year is dramatically larger than the previous one, how can we tell whether December is genuinely unusual or simply belongs to a later, larger year?
+
+---
+
+### Comparing the Shape of Each Year
+
+To isolate recurring within-year behavior, I focused on **2010–2014**.
+
+Earlier years contained too few observations for stable monthly comparisons, while 2015 was excluded because the dataset ends partway through the year.
+
+![Review Volume by Month and Year](images/06_review_volume_by_month.png)
+
+Plotting each year separately reveals a recurring shape:
+
+- activity softens during the spring;
+- begins rebuilding during the second half of the year; and
+- rises sharply toward December.
+
+However, raw counts still make direct comparisons difficult because 2014 contains far more reviews than 2010.
+
+So one additional normalization step was needed.
+
+---
+
+### Normalizing for Marketplace Growth
+
+For each year, monthly review volume was divided by that year's average monthly review count:
+
+```text
+Seasonal Index =
+Monthly Review Volume
+────────────────────────
+Average Month in Same Year
+```
+
+An index of:
+
+- **1.0** = typical month for that year
+- **> 1.0** = above-average month
+- **< 1.0** = below-average month
+
+![Seasonal Index by Month](images/07_seasonal_index.png)
+
+After controlling for the enormous differences in annual scale, the recurring seasonal pattern becomes much clearer.
+
+Across 2010–2014:
+
+- **December** was approximately **65% above an average month** and represented about **13.9% of annual reviews**.
+- **November** represented approximately **9.9%** of annual activity.
+- **October** represented approximately **9.2%**.
+- February through June formed a recurring trough at roughly **20% below an average month**.
+- **April (6.6%)** and **February (6.7%)** were among the lowest-volume months.
+- Activity generally increased from July through the end of the year.
 
 ### Takeaway
 
-Review activity appears to follow a recurring annual cycle rather than being evenly distributed throughout the year.
+Marketplace review activity demonstrates a clear recurring annual pattern:
 
-For marketplace teams, this means changes in review volume should be interpreted relative to normal seasonal behavior. A month-over-month increase or decrease may reflect expected customer activity rather than a fundamental change in product performance.
+**spring trough → second-half recovery → December peak**
+
+The important analytical distinction is that **long-term marketplace growth and seasonality are separate effects**.
+
+Raw monthly counts alone could easily confuse the two. Normalizing each month relative to its own year's activity makes it possible to compare seasonal behavior despite enormous differences in platform scale.
+
+The December peak is consistent with holiday-period purchasing behavior, although review dates represent when customers submitted reviews rather than when purchases occurred. The pattern therefore reflects the seasonality of **review activity**, which may lag purchasing behavior.
 
 ---
 
+# Technical Implementation
+
+## SQL — Prepare Analysis-Ready Data
+
+Rather than moving millions of records into R, SQL was used to perform the heavier aggregation work within MySQL.
+
+For the analyses presented here, SQL was used to:
+
+- calculate average ratings by verification status;
+- aggregate review counts by star rating;
+- identify reviewers meeting the extreme-rating behavioral criteria;
+- recalculate rating distributions after excluding those reviewers; and
+- aggregate review volume by month and year.
+
+This produced smaller analytical tables designed specifically for downstream visualization.
+
+---
 # From Database to Analysis
 
 One of my primary technical contributions was developing the Python workflow used to move analytical results from the remote database into the visualization environment.
