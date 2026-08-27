@@ -6,20 +6,14 @@ Python | MySQL | SQL | R | pandas
 ## Project Overview
 Online marketplaces collect enormous amounts of customer feedback, but review volume alone does not necessarily translate into useful insight. Understanding how customers rate products, whether different types of reviewers behave differently, and when review activity changes can help businesses interpret marketplace feedback more effectively.
 
-This project analyzed more than **2.6 million e-commerce product reviews** through an end-to-end analytics workflow spanning Python, MySQL, SQL, and R.
+This project analyzed more than **2.6 million e-commerce product reviews** through an end-to-end analytics workflow spanning Python, MySQL, SQL, and R. The analysis focused on four areas: verified vs. non-verified ratings, the overall rating distribution, the impact of potentially biased reviewers, and recurring seasonal changes in review activity.
 
-The analysis explored several dimensions of marketplace review behavior, including:
+To handle the dataset efficiently, heavier processing and aggregation were completed in MySQL, Python was used to extract analysis-ready tables, and R was used for visualization and interpretation.
 
-- whether verified purchasers rate products differently from non-verified reviewers;
-- how customer ratings are distributed across the 1–5 star scale;
-- whether reviewers displaying unusually extreme rating behavior materially influence the overall rating distribution; and
-- whether review activity exhibits recurring seasonal patterns.
+## Collaboration
+This project was completed collaboratively. The repository focuses on the components and analyses I personally contributed to, while the broader project involved shared work across data ingestion, database cleaning, SQL analysis, visualization, and interpretation.
 
-Rather than processing the full dataset locally, the workflow used a remote MySQL database for data preparation and aggregation. Python was then used to extract analysis-ready results from the database, while R was used to visualize and interpret the resulting patterns.
-
-
-## My Contribution
-This was a collaborative analytics project. My primary contribution includes:
+My primary contribution includes:
 - **Building a reusable Python extraction utility** that connects to a remote MySQL database and exports selected analytical tables to local CSV files.
 - Preparing and working with SQL outputs for analyses covering **verified purchase behavior, rating distribution, reviewer rating bias, and review seasonality**.
 - Developing R visualizations to communicate these patterns and translate analytical results into understandable business insights.
