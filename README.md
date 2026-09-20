@@ -14,7 +14,7 @@ To handle the dataset efficiently, heavier processing and aggregation were compl
 This project was completed collaboratively. The repository focuses on the components and analyses I personally contributed to, while the broader project involved shared work across data ingestion, database cleaning, SQL analysis, visualization, and interpretation.
 
 My primary contribution includes:
-- **Building a reusable Python extraction utility** that connects to a remote MySQL database and exports selected analytical tables to local CSV files.
+- **Building a reusable Python extraction utility** that connects to a remote MySQL database and exports selected analytical tables to local CSV files. (view in src folder)
 - Preparing and working with SQL outputs for analyses covering **verified purchase behavior, rating distribution, reviewer rating bias, and review seasonality**.
 - Developing R visualizations to communicate these patterns and translate analytical results into understandable business insights.
 - Contributing to the interpretation and communication of findings within the final analysis.
