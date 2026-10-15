@@ -6,7 +6,7 @@ Python | MySQL | SQL | R | pandas
 ## Project Overview
 Online marketplaces collect enormous amounts of customer feedback, but review volume alone does not necessarily translate into useful insight. Understanding how customers rate products, whether different types of reviewers behave differently, and when review activity changes can help businesses interpret marketplace feedback more effectively.
 
-This project analyzed more than **2.6 million e-commerce product reviews** through an end-to-end analytics workflow spanning Python, MySQL, SQL, and R. The analysis focused on four areas: verified vs. non-verified ratings, the overall rating distribution, the impact of potentially biased reviewers, and recurring seasonal changes in review activity.
+This project analyzed more than **2.6 million e-commerce product reviews** through an end-to-end analytics workflow spanning Python, MySQL, SQL, and R. The analysis focused on four areas: **verified vs. non-verified ratings, the overall rating distribution, the impact of potentially biased reviewers, and recurring seasonal changes in review activity**.
 
 To handle the dataset efficiently, heavier processing and aggregation were completed in MySQL, Python was used to extract analysis-ready tables, and R was used for visualization and interpretation.
 
