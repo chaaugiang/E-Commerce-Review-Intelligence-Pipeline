@@ -41,7 +41,7 @@ Verified purchasers were associated with **more positive rating behavior**, but 
 
 ---
 
-## 2. The Average Rating Hides a Highly Polarized Distribution
+## 2. The Average Rating Hides a Strongly Positive Distribution
 
 Although the overall average was 4.14 stars, ratings were concentrated at the upper end:
 
@@ -68,7 +68,7 @@ The distribution behaves less like a smooth measure of satisfaction and more lik
 
 ---
 
-## 3. Are Extreme Reviewers Driving the Positive Ratings?
+## 3. Excluding Extreme Reviewers Had a Modest Effect
 
 The strongly top-heavy rating distribution raised another question: Could a relatively small group of reviewers who repeatedly give extreme ratings be distorting the marketplace's overall rating profile?
 
@@ -129,7 +129,7 @@ The result should therefore be interpreted as a **sensitivity analysis of review
 
 ---
 
-## 4. Review Activity Grew Dramatically - But Growth and Seasonality Are Different Stories
+## 4. Review Activity Showed Recurring Year-End Peaks
 
 The final analysis examined how marketplace review activity changed over time.
 
@@ -201,9 +201,9 @@ The December peak is consistent with holiday-period purchasing behavior, althoug
 
 ---
 
-## Technical Implementation
+## Technical Approach
 
-### SQL - Prepare Analysis-Ready Data
+### SQL - Aggregate Within the Database
 
 Rather than moving millions of records into R, SQL was used to perform the heavier aggregation work within MySQL.
 
